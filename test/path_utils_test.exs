@@ -93,23 +93,23 @@ defmodule PathUtilsTest do
   #   check_dcd_of(@test_dir, @posix_dir, @lib_file)
   # end
 
-  # @tag :no_symlinks
-  # test "maxsymlinks output (no symlinks)" do
-  #   assert 0 == PU.maxsymlinks()
-  # end
+  @tag :no_symlinks
+  test "maxsymlinks output (no symlinks)" do
+    assert 0 == PU.maxsymlinks()
+  end
 
-  # @tag :has_symlinks
-  # test "maxsymlinks output (has symlinks)" do
-  #   expected = case :os.type do
-  #     { :win32, _ } -> 31
-  #     _             -> 64
-  #   end
+  @tag :has_symlinks
+  test "maxsymlinks output (has symlinks)" do
+    expected = case :os.type do
+      { :win32, _ } -> 31
+      _             -> 64
+    end
 
-  #   assert expected == PU.maxsymlinks()
-  # end
+    assert expected == PU.maxsymlinks()
+  end
 
 
-  # # Helpers
+  # Helpers
 
 
   # defp check_dcd_of(exp_dir, p1, p2) do
