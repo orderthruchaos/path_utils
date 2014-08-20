@@ -11,19 +11,15 @@ defmodule PathUtilsTest do
   @posix_file  Path.join(@posix_dir, "some_file.txt")
 
 
-  # test "Test the file properties of '#{@test_path}'" do
-  #   # IO.puts ""
-  #   # IO.puts @test_file
-  #   # IO.puts @test_path
-  #   # IO.puts ""
-  #   assert File.exists?(@test_path)
-  #   assert File.regular?(@test_path)
-  # end
+  test "Test the file properties of '#{@test_path}'" do
+    assert File.exists?(@test_path)
+    assert File.regular?(@test_path)
+  end
 
-  # test "Test the properties of the directory '#{@test_dir}'" do
-  #   assert File.exists?(@test_dir)
-  #   assert File.dir?(@test_dir)
-  # end
+  test "Test the properties of the directory '#{@test_dir}'" do
+    assert File.exists?(@test_dir)
+    assert File.dir?(@test_dir)
+  end
 
   test "Directory is not a symlink." do
     refute PU.symlink?(@test_dir)
@@ -33,30 +29,30 @@ defmodule PathUtilsTest do
     refute PU.symlink?(@test_path)
   end
 
-  # test "Basic test path properties" do
-  #   assert File.dir?     @data_dir
-  #   assert File.dir?     @win32_dir
-  #   assert File.dir?     @posix_dir
-  #   assert File.regular? @win32_file
-  #   assert File.regular? @posix_file
-  # end
+  test "Basic test path properties" do
+    assert File.dir?     @data_dir
+    assert File.dir?     @win32_dir
+    assert File.dir?     @posix_dir
+    assert File.regular? @win32_file
+    assert File.regular? @posix_file
+  end
 
-  # test "directory:  directories" do
-  #   assert dc(@test_dir) == dc(PU.directory(@test_dir))
-  #   assert dc(@data_dir) == dc(PU.directory(@data_dir))
+  test "directory:  directories" do
+    assert dc(@test_dir) == dc(PU.directory(@test_dir))
+    assert dc(@data_dir) == dc(PU.directory(@data_dir))
 
-  #   rel_data = Path.relative_to_cwd(@data_dir)
-  #   assert rel_data != @data_dir
-  #   assert dc(@data_dir) == dc(PU.directory(rel_data))
-  # end
+    rel_data = Path.relative_to_cwd(@data_dir)
+    assert rel_data != @data_dir
+    assert dc(@data_dir) == dc(PU.directory(rel_data))
+  end
 
-  # test "directory:  files" do
-  #   assert @posix_dir == PU.directory(@posix_file)
+  test "directory:  files" do
+    assert @posix_dir == PU.directory(@posix_file)
 
-  #   rel_posix = Path.relative_to_cwd(@posix_file)
-  #   assert rel_posix != @posix_file
-  #   assert @posix_dir == PU.directory(rel_posix)
-  # end
+    rel_posix = Path.relative_to_cwd(@posix_file)
+    assert rel_posix != @posix_file
+    assert @posix_dir == PU.directory(rel_posix)
+  end
 
   # test "dcd:  no brainers" do
   #   check_dcd_of(@test_dir, @test_dir, @test_dir)
@@ -135,11 +131,11 @@ defmodule PathUtilsTest do
   #   assert dc(exp_dir) == dc(PU.dcd(r2, r1))
   # end
 
-  # defp dc(s) do
-  #   case :os.type do
-  #     { :win32, _ } -> String.downcase(s)
-  #     _             -> s
-  #   end
-  # end
+  defp dc(s) do
+    case OSUtils.os_id do
+      :win32 -> String.downcase(s)
+      _      -> s
+    end
+  end
 
 end

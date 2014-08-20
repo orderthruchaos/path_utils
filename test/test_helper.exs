@@ -20,8 +20,8 @@ end
 #   _                  -> tags_to_exclude = [:os, :os_sym, :no_symlinks]
 # end
 
-{ this_os, _ } = :os.type
-os_sym_tag     = :"#{this_os}_#{incl_symlinks_str}"
+this_os    = OSUtils.os_id
+os_sym_tag = :"#{this_os}_#{incl_symlinks_str}"
 
 
 ExUnit.configure(
@@ -37,7 +37,7 @@ defmodule PathUtils.Case do
 
 
   using do
-    { os_id, _ } = :os.type
+    os_id  = OSUtils.os_id
     os_str = case os_id do
       :unix -> "posix"
       _     -> to_string os_id

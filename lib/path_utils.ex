@@ -40,18 +40,18 @@ defmodule PathUtils do
   #   _dcd(dir1, dir2)
   # end
 
-  # def directory(path), do: _directory(Path.expand(path))
+  def directory(path), do: _directory(Path.expand(path))
 
 
-  # # Helpers
+  # Helpers
 
 
-  # defp _directory(path) do
-  #   case File.dir?(path) do
-  #     true -> path
-  #     _    -> Path.dirname(path)
-  #   end
-  # end
+  defp _directory(path) do
+    case File.dir?(path) do
+      true -> path
+      _    -> Path.dirname(path)
+    end
+  end
 
   # defp _dcd(p1, p2), do:  _dcd_take(p1, p2) |> _dcd_comb
 

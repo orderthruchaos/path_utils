@@ -5,15 +5,15 @@ defmodule PathUtilsUnixTest do
   pu_alias
 
 
-  # @tag os_sym: :unix_has_symlinks
-  # test "Test the file properties of '#{@rel_link}'" do
-  #   # IO.puts ""
-  #   # IO.puts @rel_link
-  #   # IO.puts ""
-  #   assert File.exists?(@rel_link)
-  #   assert @link_trgt != @rel_link
-  #   check_link @orig_file, @rel_link
-  # end
+  @tag os_sym: :unix_has_symlinks
+  test "Test the file properties of '#{@rel_link}'" do
+    # IO.puts ""
+    # IO.puts @rel_link
+    # IO.puts ""
+    assert File.exists?(@rel_link)
+    assert @link_trgt != @rel_link
+    check_link @orig_file, @rel_link
+  end
 
   @tag os_sym: :unix_has_symlinks
   test "symlink? returns true for #{@rel_link}" do
@@ -44,16 +44,16 @@ defmodule PathUtilsUnixTest do
   # Helpers
 
 
-  # defp check_link(target, link) do
-  #   process_read_link(target, link, :file.read_link(@rel_link))
-  # end
+  defp check_link(target, link) do
+    process_read_link(target, link, :file.read_link(@rel_link))
+  end
 
-  # defp process_read_link(target, _link, {:ok, path}) do
-  #   assert target == to_string(path)
-  # end
+  defp process_read_link(target, _link, {:ok, path}) do
+    assert target == to_string(path)
+  end
 
-  # defp process_read_link(target, link, _) do
-  #   flunk "Could not read symlink: #{link} -> #{target}"
-  # end
+  defp process_read_link(target, link, _) do
+    flunk "Could not read symlink: #{link} -> #{target}"
+  end
 
 end
