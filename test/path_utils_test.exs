@@ -25,13 +25,13 @@ defmodule PathUtilsTest do
   #   assert File.dir?(@test_dir)
   # end
 
-  # test "Directory is not a symlink." do
-  #   assert ! PU.symlink?(@test_dir)
-  # end
+  test "Directory is not a symlink." do
+    refute PU.symlink?(@test_dir)
+  end
 
-  # test "File is not a symlink." do
-  #   assert ! PU.symlink?(@test_path)
-  # end
+  test "File is not a symlink." do
+    refute PU.symlink?(@test_path)
+  end
 
   # test "Basic test path properties" do
   #   assert File.dir?     @data_dir

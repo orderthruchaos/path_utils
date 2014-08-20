@@ -26,12 +26,12 @@ defmodule PathUtils do
     end
   end
 
-  # def symlink?(path) do
-  #   case :file.read_link(path) do
-  #     {:ok, _} -> true
-  #     _        -> false
-  #   end
-  # end
+  def symlink?(path) do
+    case :file.read_link(path) do
+      {:ok, _} -> true
+      _        -> false
+    end
+  end
 
   # # Deepest common directory
   # def dcd(path1, path2) do

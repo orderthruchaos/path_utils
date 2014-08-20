@@ -15,15 +15,15 @@ defmodule PathUtilsUnixTest do
   #   check_link @orig_file, @rel_link
   # end
 
-  # @tag os_sym: :unix_has_symlinks
-  # test "symlink? returns true for #{@rel_link}" do
-  #   assert PU.symlink?(@rel_link)
-  # end
+  @tag os_sym: :unix_has_symlinks
+  test "symlink? returns true for #{@rel_link}" do
+    assert PU.symlink?(@rel_link)
+  end
 
-  # @tag os_sym: :unix_no_symlinks
-  # test "symlink? returns false for #{@rel_link} (not supported)" do
-  #   refute PU.symlink?(@rel_link)
-  # end
+  @tag os_sym: :unix_no_symlinks
+  test "symlink? returns false for #{@rel_link} (not supported)" do
+    refute PU.symlink?(@rel_link)
+  end
 
   @tag os_sym: :unix_has_symlinks
   test "maxsymlinks output" do
