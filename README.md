@@ -1,4 +1,6 @@
 PathUtils
 =========
 
-** TODO: Add description **
+Path utilities for Elixir.
+
+** TODO: Add details **
