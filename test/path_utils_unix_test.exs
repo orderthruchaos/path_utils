@@ -5,16 +5,6 @@ defmodule PathUtilsUnixTest do
   pu_alias
 
 
-  # @tag os: :unix
-  # test "Test the file properties of '#{@test_path}'" do
-  #   # IO.puts ""
-  #   # IO.puts @test_file
-  #   # IO.puts @test_path
-  #   # IO.puts ""
-  #   assert File.exists?(@test_path)
-  #   assert File.regular?(@test_path)
-  # end
-
   # @tag os_sym: :unix_has_symlinks
   # test "Test the file properties of '#{@rel_link}'" do
   #   # IO.puts ""
@@ -39,6 +29,16 @@ defmodule PathUtilsUnixTest do
   test "maxsymlinks output" do
     assert 64 == PU.maxsymlinks()
   end
+
+  # @tag os: :unix
+  # test "Test the file properties of '#{@test_path}'" do
+  #   # IO.puts ""
+  #   # IO.puts @test_file
+  #   # IO.puts @test_path
+  #   # IO.puts ""
+  #   assert File.exists?(@test_path)
+  #   assert File.regular?(@test_path)
+  # end
 
 
   # Helpers
