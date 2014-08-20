@@ -54,36 +54,36 @@ defmodule PathUtilsTest do
     assert @posix_dir == PU.directory(rel_posix)
   end
 
-  # test "dcd:  no brainers" do
-  #   check_dcd_of(@test_dir, @test_dir, @test_dir)
-  #   check_dcd_of(@data_dir, @data_dir, @data_dir)
-  # end
+  test "dcd:  no brainers" do
+    check_dcd_of(@test_dir, @test_dir, @test_dir)
+    check_dcd_of(@data_dir, @data_dir, @data_dir)
+  end
 
-  # test "dcd:  no brainers, relative dirs" do
-  #   check_dcd_of_rel(@data_dir, @data_dir, @data_dir)
-  # end
+  test "dcd:  no brainers, relative dirs" do
+    check_dcd_of_rel(@data_dir, @data_dir, @data_dir)
+  end
 
-  # test "dcd:  directory portion of paths" do
-  #   check_dcd_of(@posix_dir, @posix_file, @posix_dir)
-  # end
+  test "dcd:  directory portion of paths" do
+    check_dcd_of(@posix_dir, @posix_file, @posix_dir)
+  end
 
-  # test "dcd:  directory portion of relative paths" do
-  #   check_dcd_of_rel(@posix_dir, @posix_file, @posix_dir)
-  # end
+  test "dcd:  directory portion of relative paths" do
+    check_dcd_of_rel(@posix_dir, @posix_file, @posix_dir)
+  end
 
-  # test "dcd:  Differences occur earlier (1)" do
-  #   check_dcd_of(@data_dir, @posix_dir, @win32_dir)
-  #   check_dcd_of(@data_dir, @posix_file, @win32_dir)
-  #   check_dcd_of(@data_dir, @posix_dir, @win32_file)
-  #   check_dcd_of_rel(@data_dir, @posix_dir, @win32_dir)
-  #   check_dcd_of_rel(@data_dir, @posix_file, @win32_dir)
-  #   check_dcd_of_rel(@data_dir, @posix_dir, @win32_file)
-  # end
+  test "dcd:  Differences occur earlier (1)" do
+    check_dcd_of(@data_dir, @posix_dir, @win32_dir)
+    check_dcd_of(@data_dir, @posix_file, @win32_dir)
+    check_dcd_of(@data_dir, @posix_dir, @win32_file)
+    check_dcd_of_rel(@data_dir, @posix_dir, @win32_dir)
+    check_dcd_of_rel(@data_dir, @posix_file, @win32_dir)
+    check_dcd_of_rel(@data_dir, @posix_dir, @win32_file)
+  end
 
-  # test "dcd:  Differences occur earlier (2)" do
-  #   check_dcd_of(@test_dir, @test_file, @lib_file)
-  #   check_dcd_of(@test_dir, @posix_dir, @lib_file)
-  # end
+  test "dcd:  Differences occur earlier (2)" do
+    check_dcd_of(@test_dir, @test_file, @lib_file)
+    check_dcd_of(@test_dir, @posix_dir, @lib_file)
+  end
 
   @tag :no_symlinks
   test "maxsymlinks output (no symlinks)" do
@@ -104,32 +104,31 @@ defmodule PathUtilsTest do
   # Helpers
 
 
-  # defp check_dcd_of(exp_dir, p1, p2) do
-  #   assert dc(exp_dir) == dc(PU.dcd(p1, p2))
-  #   assert dc(exp_dir) == dc(PU.dcd(p2, p1))
-  # end
+  defp check_dcd_of(exp_dir, p1, p2) do
+    assert dc(exp_dir) == dc(PU.dcd(p1, p2))
+    assert dc(exp_dir) == dc(PU.dcd(p2, p1))
+  end
 
+  defp check_dcd_of_rel(exp_dir, p1, p2) do
+    r1 = Path.relative_to_cwd(p1)
+    r2 = Path.relative_to_cwd(p2)
 
-  # defp check_dcd_of_rel(exp_dir, p1, p2) do
-  #   r1 = Path.relative_to_cwd(p1)
-  #   r2 = Path.relative_to_cwd(p2)
+    # Check inputs
+    assert r1 != p1
+    assert r2 != p2
+    if p1 == p2 do
+      assert r1 == r2
+    else
+      assert r1 != r2
+    end
 
-  #   # Check inputs
-  #   assert r1 != p1
-  #   assert r2 != p2
-  #   if p1 == p2 do
-  #     assert r1 == r2
-  #   else
-  #     assert r1 != r2
-  #   end
-
-  #   assert dc(exp_dir) == dc(PU.dcd(r1, p2))
-  #   assert dc(exp_dir) == dc(PU.dcd(p2, r1))
-  #   assert dc(exp_dir) == dc(PU.dcd(p1, r2))
-  #   assert dc(exp_dir) == dc(PU.dcd(r2, p1))
-  #   assert dc(exp_dir) == dc(PU.dcd(r1, r2))
-  #   assert dc(exp_dir) == dc(PU.dcd(r2, r1))
-  # end
+    assert dc(exp_dir) == dc(PU.dcd(r1, p2))
+    assert dc(exp_dir) == dc(PU.dcd(p2, r1))
+    assert dc(exp_dir) == dc(PU.dcd(p1, r2))
+    assert dc(exp_dir) == dc(PU.dcd(r2, p1))
+    assert dc(exp_dir) == dc(PU.dcd(r1, r2))
+    assert dc(exp_dir) == dc(PU.dcd(r2, r1))
+  end
 
   defp dc(s) do
     case OSUtils.os_id do

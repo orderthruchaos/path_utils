@@ -33,12 +33,12 @@ defmodule PathUtils do
     end
   end
 
-  # # Deepest common directory
-  # def dcd(path1, path2) do
-  #   dir1 = directory(path1)
-  #   dir2 = directory(path2)
-  #   _dcd(dir1, dir2)
-  # end
+  # Deepest common directory
+  def dcd(path1, path2) do
+    dir1 = directory(path1)
+    dir2 = directory(path2)
+    _dcd(dir1, dir2)
+  end
 
   def directory(path), do: _directory(Path.expand(path))
 
@@ -53,16 +53,16 @@ defmodule PathUtils do
     end
   end
 
-  # defp _dcd(p1, p2), do:  _dcd_take(p1, p2) |> _dcd_comb
+  defp _dcd(p1, p2), do:  _dcd_take(p1, p2) |> _dcd_comb
 
-  # # [] should only happen on Windows when the drive letters differ.
-  # defp _dcd_comb([]), do: nil
-  # defp _dcd_comb(p),  do: Path.join(p)
+  # [] should only happen on Windows when the drive letters differ.
+  defp _dcd_comb([]), do: nil
+  defp _dcd_comb(p),  do: Path.join(p)
 
-  # defp _dcd_take(p1, p2) do
-  #   Enum.zip(Path.split(p1), Path.split(p2))
-  #     |> Enum.take_while(&(elem(&1, 0) == elem(&1, 1)))
-  #     |> Enum.map(&(elem(&1, 0)))
-  # end
+  defp _dcd_take(p1, p2) do
+    Enum.zip(Path.split(p1), Path.split(p2))
+      |> Enum.take_while(&(elem(&1, 0) == elem(&1, 1)))
+      |> Enum.map(&(elem(&1, 0)))
+  end
 
 end

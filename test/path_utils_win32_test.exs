@@ -61,15 +61,13 @@ defmodule PathUtilsWin32Test do
     check_link @link_trgt, @rel_link
   end
 
-  # @tag os: :win32
-  # test "dcd: Drive letters differ" do
-  #   assert nil === PU.dcd("C:/Windows", "D:/Windows")
-  # end
+  @tag os: :win32
+  test "dcd: Drive letters differ" do
+    assert nil === PU.dcd("C:/Windows", "D:/Windows")
+  end
 
 
-
-
-  # # Helpers
+  # Helpers
 
 
   defp check_link(target, link) do
