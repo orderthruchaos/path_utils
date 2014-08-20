@@ -10,9 +10,9 @@ defmodule PathUtilsTodoTest do
   test "flunk should not happen!", do: flunk "TODO!!!"
 
 
-  # test "PU placeholder" do
-  #   assert 64 == PU.maxsymlinks()
-  # end
+  test "PU placeholder" do
+    assert false == PU.symlink?(__ENV__.file)
+  end
 
 
 end

@@ -85,21 +85,6 @@ defmodule PathUtilsTest do
     check_dcd_of(@test_dir, @posix_dir, @lib_file)
   end
 
-  @tag :no_symlinks
-  test "maxsymlinks output (no symlinks)" do
-    assert 0 == PU.maxsymlinks()
-  end
-
-  @tag :has_symlinks
-  test "maxsymlinks output (has symlinks)" do
-    expected = case OSUtils.os_id do
-      :win32 -> 31
-      _      -> 64
-    end
-
-    assert expected == PU.maxsymlinks()
-  end
-
 
   # Helpers
 

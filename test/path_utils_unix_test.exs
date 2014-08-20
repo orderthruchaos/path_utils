@@ -25,11 +25,6 @@ defmodule PathUtilsUnixTest do
     refute PU.symlink?(@rel_link)
   end
 
-  @tag os_sym: :unix_has_symlinks
-  test "maxsymlinks output" do
-    assert 64 == PU.maxsymlinks()
-  end
-
   # @tag os: :unix
   # test "Test the file properties of '#{@test_path}'" do
   #   # IO.puts ""

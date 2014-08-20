@@ -1,31 +1,20 @@
 defmodule PathUtils do
+  @moduledoc """
+  Path utilities for Elixir.
 
-  def maxsymlinks() do
-    # Windows is known to allow 31 reparse points:
-    #   http://msdn.microsoft.com/en-us/library/aa365460.aspx
-    #
-    # Unix limit should be obtained via:
-    #   - limits.h:     SYMLINK_MAX    Cygwin
-    #   - sys/param.h:  MAXSYMLINKS    Solaris
-    # At this time, the largest value I have found is 32 (darwin).  Setting
-    # it to 64 should leave space for error.
-    #
-    # See canon_path/doc/symloop_max.c for example C program for determining
-    # this value.
-    #
-    # Unfortunately, doing this at compile time would prevent generated BEAM
-    # files from being portable.
+  Additional utilities that are not provided by `Path` or `:filename`.
 
-    if OSUtils.supports_symlinks? do
-      case OSUtils.os_id do
-        :win32 -> 31
-        _      -> 64
-      end
-    else
-      0
-    end
-  end
+  These are primarily shortcuts.
+  """
 
+
+  @doc """
+  Returns true if the final portion of a path is actually a symlink.
+
+  Symlinks may exist elsewhere in the path.  If the final portion of the path
+  is actually a file, directory, etc, and not a symlink, this function will
+  return false.
+  """
   def symlink?(path) do
     case :file.read_link(path) do
       {:ok, _} -> true
@@ -33,13 +22,24 @@ defmodule PathUtils do
     end
   end
 
-  # Deepest common directory
+
+  @doc """
+  Returns the deepest common directory of the two given paths.
+
+  Note:  symlinks are not resolved.
+  """
   def dcd(path1, path2) do
     dir1 = directory(path1)
     dir2 = directory(path2)
     _dcd(dir1, dir2)
   end
 
+
+  @doc """
+  The given path is first expanded via `Path.expand/1`.  Then, if the path
+  is a directory, it returns the entire expanded path.  Otherwise, returns
+  the directory of the expanded path via `Path.dirname/1`.
+  """
   def directory(path), do: _directory(Path.expand(path))
 
 

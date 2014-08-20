@@ -15,11 +15,6 @@ defmodule PathUtilsWin32Test do
     refute PU.symlink?(@rel_link)
   end
 
-  @tag os_sym: :win32_has_symlinks
-  test "maxsymlinks output" do
-    assert 31 == PU.maxsymlinks()
-  end
-
   # @tag os_sym: :win32_has_symlinks
   # test "os_sym: :win32_has_symlinks" do
   #   assert true, "os_sym: :win32_has_symlinks"
