@@ -1,0 +1,17 @@
+*.ez
+.*.sw?
+/_build
+/deps
+/doc/a.out
+/doc/symloop_max
+/doc/symloop_max.exe
+/test/data/win32/rec/d0*
+/test/data/win32/rec/d1*
+/test/data/win32/rec/d2*
+/test/data/win32/rec/d3*
+/test/data/win32/rel_link.txt
+a.exe
+a.out
+erl_crash.dump
+
+!/test/data/win32/rec/d01/
