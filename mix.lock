@@ -1,0 +1,2 @@
+%{"ex_doc": {:package, "0.5.2"},
+  "os_utils": {:package, "0.1.1"}}
