@@ -11,10 +11,6 @@ defmodule PathUtilsTest do
   @posix_file  Path.join(@posix_dir, "some_file.txt")
 
 
-  test "the truth" do
-    assert true
-  end
-
   # test "Test the file properties of '#{@test_path}'" do
   #   # IO.puts ""
   #   # IO.puts @test_file
@@ -100,9 +96,9 @@ defmodule PathUtilsTest do
 
   @tag :has_symlinks
   test "maxsymlinks output (has symlinks)" do
-    expected = case :os.type do
-      { :win32, _ } -> 31
-      _             -> 64
+    expected = case OSUtils.os_id do
+      :win32 -> 31
+      _      -> 64
     end
 
     assert expected == PU.maxsymlinks()
