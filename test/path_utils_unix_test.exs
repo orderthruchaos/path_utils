@@ -25,15 +25,15 @@ defmodule PathUtilsUnixTest do
     refute PU.symlink?(@rel_link)
   end
 
-  # @tag os: :unix
-  # test "Test the file properties of '#{@test_path}'" do
-  #   # IO.puts ""
-  #   # IO.puts @test_file
-  #   # IO.puts @test_path
-  #   # IO.puts ""
-  #   assert File.exists?(@test_path)
-  #   assert File.regular?(@test_path)
-  # end
+  @tag os: :unix
+  test "Test the file properties of '#{@test_path}'" do
+    # IO.puts ""
+    # IO.puts @test_file
+    # IO.puts @test_path
+    # IO.puts ""
+    assert File.exists?(@test_path)
+    assert File.regular?(@test_path)
+  end
 
 
   # Helpers
