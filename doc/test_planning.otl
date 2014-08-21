@@ -1,0 +1,30 @@
+canonicalize(path)
+	false == supports_symlinks?
+		Returns Path.exand(path) as result
+		Need a system that does not support symlinks to test.
+	Preparation
+		if supports_symlinks?
+			Any
+				Ensure there are no symlinks in the directory containing the project
+			Windows
+				Ensure test/setup/win32_symlink_setup.bat has been run
+			Unix
+				Run test/setup/posix_symlink_setup.sh
+	Regular files
+		Absolute paths
+			Path.exand(path)
+		Relative paths
+			Path.exand(path)
+	Directories
+		Absolute paths
+			Path.exand(path)
+		Relative paths
+			Path.exand(path)
+	Symlinks
+		File
+		Directories
+Concerns:
+	{ :ose, _ } = :os.type
+		Do not have this system type available for testing
+	Need a system that does not support symlinks to test.
+# vim:ft=otl sts=4 sw=4 ts=4 noet

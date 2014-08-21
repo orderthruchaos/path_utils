@@ -1,0 +1,85 @@
+URL:
+  http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap04.html#tag_04_12
+
+
+4.12 Pathname Resolution
+
+Pathname resolution is performed for a process to resolve a pathname to a
+particular directory entry for a file in the file hierarchy. There may be
+multiple pathnames that resolve to the same directory entry, and multiple
+directory entries for the same file. When a process resolves a pathname of an
+existing directory entry, the entire pathname shall be resolved as described
+below. When a process resolves a pathname of a directory entry that is to be
+created immediately after the pathname is resolved, pathname resolution
+terminates when all components of the path prefix of the last component have
+been resolved. It is then the responsibility of the process to create the
+final component.
+
+Each filename in the pathname is located in the directory specified by its
+predecessor (for example, in the pathname fragment a/b, file b is located in
+directory a). Pathname resolution shall fail if this cannot be accomplished.
+If the pathname begins with a <slash>, the predecessor of the first filename
+in the pathname shall be taken to be the root directory of the process (such
+pathnames are referred to as "absolute pathnames"). If the pathname does not
+begin with a <slash>, the predecessor of the first filename of the pathname
+shall be taken to be either the current working directory of the process or
+for certain interfaces the directory identified by a file descriptor passed to
+the interface (such pathnames are referred to as "relative pathnames").
+
+The interpretation of a pathname component is dependent on the value of
+{NAME_MAX} and _POSIX_NO_TRUNC associated with the path prefix of that
+component. If any pathname component is longer than {NAME_MAX}, the
+implementation shall consider this an error.
+
+A pathname that contains at least one non- <slash> character and that ends
+with one or more trailing <slash> characters shall not be resolved
+successfully unless the last pathname component before the trailing <slash>
+characters names an existing directory or a directory entry that is to be
+created for a directory immediately after the pathname is resolved. Interfaces
+using pathname resolution may specify additional constraints1 when a pathname
+that does not name an existing directory contains at least one non- <slash>
+character and contains one or more trailing <slash> characters.
+
+If a symbolic link is encountered during pathname resolution, the behavior
+shall depend on whether the pathname component is at the end of the pathname
+and on the function being performed. If all of the following are true, then
+pathname resolution is complete:
+
+  - This is the last pathname component of the pathname.
+
+  - The pathname has no trailing <slash>.
+
+  - The function is required to act on the symbolic link itself, or certain
+    arguments direct that the function act on the symbolic link itself.
+
+In all other cases, the system shall prefix the remaining pathname, if any,
+with the contents of the symbolic link. If the combined length exceeds
+{PATH_MAX}, and the implementation considers this to be an error, errno shall
+be set to [ENAMETOOLONG] and an error indication shall be returned. Otherwise,
+the resolved pathname shall be the resolution of the pathname just created. If
+the resulting pathname does not begin with a <slash>, the predecessor of the
+first filename of the pathname is taken to be the directory containing the
+symbolic link.
+
+If the system detects a loop in the pathname resolution process, it shall set
+errno to [ELOOP] and return an error indication. The same may happen if during
+the resolution process more symbolic links were followed than the
+implementation allows. This implementation-defined limit shall not be smaller
+than {SYMLOOP_MAX}.
+
+The special filename dot shall refer to the directory specified by its
+predecessor. The special filename dot-dot shall refer to the parent directory
+of its predecessor directory. As a special case, in the root directory,
+dot-dot may refer to the root directory itself.
+
+A pathname consisting of a single <slash> shall resolve to the root directory
+of the process. A null pathname shall not be successfully resolved. If a
+pathname begins with two successive <slash> characters, the first component
+following the leading <slash> characters may be interpreted in an
+implementation-defined manner, although more than two leading <slash>
+characters shall be treated as a single <slash> character.
+
+Pathname resolution for a given pathname shall yield the same results when
+used by any interface in POSIX.1-2008 as long as there are no changes to any
+files evaluated during pathname resolution for the given pathname between
+resolutions.

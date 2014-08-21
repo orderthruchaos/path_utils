@@ -1,0 +1,41 @@
+canonicalize
+	defmodule CanonPath.WorkPath (WP in this document)
+		import Path, only: [join: 1, expand: 1, split: 1]
+		defstruct
+			path:  nil,
+			parts: [],
+			lookup_count: 0
+		new(path) when is_binary(path)
+			Ensure exists first.
+			epath = path |> Path.expand
+			if ! OsUtils.supports_symlinks? do
+				%CanonPath.WorkPath{path: epath}
+			else
+				case (epath |> Path.split) do
+					[h|t] = %CanonPath.WorkPath{path: h, parts: t}
+					_     = {:error, "Expanded path can not be split: '#{epath}'"}
+				end
+			end
+		canonicalize(wp)
+	helpers
+		cumulative_paths
+			See test_helper.exs:  cumulative_dirs
+			See doc/cumulative_paths.exs
+			Something like this could be used to create a list of structs.
+		_canonicalize(%WP{path: p, parts: []} = wp)
+			if is_symlink?
+				-> process_symlink(wp)
+			else
+				-> p
+		process_symlink(%CanonPath.WorkPath{} = wp)
+		| TODO
+			l = read_link wp.path
+			path = cond do
+				is_absolute? l -> l
+				true           -> Path.expand(l, Path.dirname(wp.path))
+			end
+			%CanonPath.WorkPath{path: path, lookup_count: wp.lookup_count + 1}
+		is_absolute?(path)
+			Path.type(path) == :absolute
+		is_vol_rel?(path)
+			Path.type(path) == :volumerelative
