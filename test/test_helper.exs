@@ -5,11 +5,12 @@ end
 
 if has_symlinks do
   incl_symlinks_str = "has_symlinks"
-  tags_to_exclude = [:todo, :os, :os_sym, :no_symlinks]
+  tags_to_exclude   = [:todo, :os, :os_sym, :no_symlinks]
 else
   incl_symlinks_str = "no_symlinks"
-  tags_to_exclude = [:todo, :os, :os_sym, :has_symlinks]
+  tags_to_exclude   = [:todo, :os, :os_sym, :has_symlinks]
 end
+
 
 # incl_symlinks_str = case :file.read_link(Path.expand(__ENV__.file)) do
 #   {:error, :enotsup} -> "no_symlinks"
@@ -19,6 +20,7 @@ end
 #   {:error, :enotsup} -> tags_to_exclude = [:os, :os_sym, :has_symlinks]
 #   _                  -> tags_to_exclude = [:os, :os_sym, :no_symlinks]
 # end
+
 
 this_os    = OSUtils.os_id
 os_sym_tag = :"#{this_os}_#{incl_symlinks_str}"
@@ -37,27 +39,24 @@ defmodule PathUtils.Case do
 
 
   using do
-    os_id  = OSUtils.os_id
-    os_str = case os_id do
-      :unix -> "posix"
-      _     -> to_string os_id
-    end
-    d = __DIR__
+    d      = __DIR__
+    setup_complete = setup_complete?
 
     quote do
       import  unquote(__MODULE__)
       require PathUtils
 
-      @test_os     unquote(os_id)
-      @test_os_str unquote(os_str)
-      @test_dir    System.cwd
-      @test_file   Path.relative_to_cwd(__ENV__.file)
-      @test_path   Path.expand(@test_file)
-      @data_dir    Path.expand(Path.join(unquote(d), "data"))
-      @lib_file    Path.join(["test", "..", "lib", "canon_path.ex"])
-      @orig_file   "some_file.txt"
-      @link_trgt   Path.join([unquote(d), "data", @test_os_str, @orig_file])
-      @rel_link    Path.join([unquote(d), "data", @test_os_str, "rel_link.txt"])
+      @test_os        unquote(OSUtils.os_id)
+      @test_os_str    unquote(os_str)
+      @test_dir       System.cwd
+      @test_file      Path.relative_to_cwd(__ENV__.file)
+      @test_path      Path.expand(@test_file)
+      @data_dir       Path.expand(Path.join(unquote(d), "data"))
+      @lib_file       Path.join(["test", "..", "lib", "canon_path.ex"])
+      @orig_file      "some_file.txt"
+      @link_trgt      Path.join([unquote(d), "data", @test_os_str, @orig_file])
+      @rel_link       Path.join([unquote(d), "data", @test_os_str, "rel_link.txt"])
+      @setup_complete unquote(setup_complete)
 
     end
   end
@@ -110,5 +109,17 @@ defmodule PathUtils.Case do
       x, [h|_] = acc -> [ Path.join(h, x) | acc ]
     end
     Path.split(d) |> List.foldl([], f) |> Enum.reverse
+  end
+
+  defp setup_complete? do
+    known_symlink  = Path.join([__DIR__, "data", os_str, "rel_link.txt"])
+    is_symlink? known_symlink
+  end
+
+  defp os_str do
+    case OSUtils.os_id do
+      :unix -> "posix"
+      _     -> to_string OSUtils.os_id
+    end
   end
 end
