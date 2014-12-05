@@ -22,7 +22,15 @@ canonicalize(path)
 			Path.exand(path)
 	Symlinks
 		File
+			Absolute path symlink
+			Relative path symlink
+			Multiple symlinks in path
 		Directories
+			Absolute path symlink
+			Relative path symlink
+			Multiple symlinks in path
+	Failure
+		OSUtils.maxsymlinks/0 must not be exceeded
 Concerns:
 	{ :ose, _ } = :os.type
 		Do not have this system type available for testing
