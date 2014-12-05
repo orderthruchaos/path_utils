@@ -1,3 +1,7 @@
+# IO.inspect
+Code.load_file("mix/tasks/test_setup.ex", __DIR__)
+
+
 defmodule PathUtils.Mixfile do
   use Mix.Project
 
@@ -22,6 +26,7 @@ defmodule PathUtils.Mixfile do
         source_url: @github,
         source_ref: @version,
       ],
+      aliases: aliases,
     ]
   end
 
@@ -46,5 +51,25 @@ defmodule PathUtils.Mixfile do
       {:os_utils, "~> 0.1"},
       {:ex_doc, "~> 0.5", only: :dev},
     ]
+  end
+
+  defp aliases do
+    [
+      distclean: [
+        "clean",
+        "deps.clean --all",
+        &clean_extraneous_directories/1,
+      ],
+      test_setup: &Mix.Tasks.TestSetup.run/1,
+    ]
+  end
+
+  defp clean_extraneous_directories(_) do
+    ~w{_build deps}
+    |> Enum.filter(&(File.dir? &1))
+    |> Enum.map(&(File.rm_rf! &1))
+    # |> Enum.map(&("File.rm_rf! #{&1}"))
+    # |> Enum.join("\n")
+    # |> Mix.shell.info
   end
 end
