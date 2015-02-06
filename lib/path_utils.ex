@@ -28,7 +28,7 @@ defmodule PathUtils do
 
   Note:  symlinks are not resolved.
   """
-  def dcd(path1, path2) do
+  def deepest_common_directory(path1, path2) do
     dir1 = directory(path1)
     dir2 = directory(path2)
     _dcd(dir1, dir2)

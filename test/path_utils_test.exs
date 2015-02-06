@@ -54,24 +54,24 @@ defmodule PathUtilsTest do
     assert @posix_dir == PU.directory(rel_posix)
   end
 
-  test "dcd:  no brainers" do
+  test "deepest_common_directory:  no brainers" do
     check_dcd_of(@test_dir, @test_dir, @test_dir)
     check_dcd_of(@data_dir, @data_dir, @data_dir)
   end
 
-  test "dcd:  no brainers, relative dirs" do
+  test "deepest_common_directory:  no brainers, relative dirs" do
     check_dcd_of_rel(@data_dir, @data_dir, @data_dir)
   end
 
-  test "dcd:  directory portion of paths" do
+  test "deepest_common_directory:  directory portion of paths" do
     check_dcd_of(@posix_dir, @posix_file, @posix_dir)
   end
 
-  test "dcd:  directory portion of relative paths" do
+  test "deepest_common_directory:  directory portion of relative paths" do
     check_dcd_of_rel(@posix_dir, @posix_file, @posix_dir)
   end
 
-  test "dcd:  Differences occur earlier (1)" do
+  test "deepest_common_directory:  Differences occur earlier (1)" do
     check_dcd_of(@data_dir, @posix_dir, @win32_dir)
     check_dcd_of(@data_dir, @posix_file, @win32_dir)
     check_dcd_of(@data_dir, @posix_dir, @win32_file)
@@ -80,7 +80,7 @@ defmodule PathUtilsTest do
     check_dcd_of_rel(@data_dir, @posix_dir, @win32_file)
   end
 
-  test "dcd:  Differences occur earlier (2)" do
+  test "deepest_common_directory:  Differences occur earlier (2)" do
     check_dcd_of(@test_dir, @test_file, @lib_file)
     check_dcd_of(@test_dir, @posix_dir, @lib_file)
   end
@@ -90,8 +90,8 @@ defmodule PathUtilsTest do
 
 
   defp check_dcd_of(exp_dir, p1, p2) do
-    assert dc(exp_dir) == dc(PU.dcd(p1, p2))
-    assert dc(exp_dir) == dc(PU.dcd(p2, p1))
+    assert dc(exp_dir) == dc(PU.deepest_common_directory(p1, p2))
+    assert dc(exp_dir) == dc(PU.deepest_common_directory(p2, p1))
   end
 
   defp check_dcd_of_rel(exp_dir, p1, p2) do
@@ -107,12 +107,12 @@ defmodule PathUtilsTest do
       assert r1 != r2
     end
 
-    assert dc(exp_dir) == dc(PU.dcd(r1, p2))
-    assert dc(exp_dir) == dc(PU.dcd(p2, r1))
-    assert dc(exp_dir) == dc(PU.dcd(p1, r2))
-    assert dc(exp_dir) == dc(PU.dcd(r2, p1))
-    assert dc(exp_dir) == dc(PU.dcd(r1, r2))
-    assert dc(exp_dir) == dc(PU.dcd(r2, r1))
+    assert dc(exp_dir) == dc(PU.deepest_common_directory(r1, p2))
+    assert dc(exp_dir) == dc(PU.deepest_common_directory(p2, r1))
+    assert dc(exp_dir) == dc(PU.deepest_common_directory(p1, r2))
+    assert dc(exp_dir) == dc(PU.deepest_common_directory(r2, p1))
+    assert dc(exp_dir) == dc(PU.deepest_common_directory(r1, r2))
+    assert dc(exp_dir) == dc(PU.deepest_common_directory(r2, r1))
   end
 
   defp dc(s) do

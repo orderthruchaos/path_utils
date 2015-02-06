@@ -45,7 +45,7 @@ defmodule PathUtilsWin32Test do
     assert File.regular?(@test_path)
   end
 
-  @tag os: :win32
+  @tag os_sym: :win32_has_symlinks
   test "Test the file properties of '#{@rel_link}'" do
     # IO.puts ""
     # IO.puts @rel_link
@@ -57,8 +57,8 @@ defmodule PathUtilsWin32Test do
   end
 
   @tag os: :win32
-  test "dcd: Drive letters differ" do
-    assert nil === PU.dcd("C:/Windows", "D:/Windows")
+  test "deepest_common_directory: Drive letters differ" do
+    assert nil === PU.deepest_common_directory("C:/Windows", "D:/Windows")
   end
 
 
