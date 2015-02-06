@@ -28,7 +28,7 @@ defmodule CanonPath.MixfileHelper do
   end
 
   defp _get_maxsymlinks(_          , false), do: 0
-  defp _get_maxsymlinks({:win32, _}, _    ), do: 31
+  defp _get_maxsymlinks({:win32, _}, _    ), do: 63
   defp _get_maxsymlinks(_          , _    ) do
     @default_symlinkmax
   end
