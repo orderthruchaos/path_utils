@@ -3,12 +3,11 @@ has_symlinks = case :file.read_link(Path.expand(__ENV__.file)) do
   _                  -> true
 end
 
+{ incl_symlinks_str, tags_to_exclude } =
 if has_symlinks do
-  incl_symlinks_str = "has_symlinks"
-  tags_to_exclude   = [:todo, :os, :os_sym, :no_symlinks]
+  { "has_symlinks", [:todo, :os, :os_sym, :no_symlinks] }
 else
-  incl_symlinks_str = "no_symlinks"
-  tags_to_exclude   = [:todo, :os, :os_sym, :has_symlinks]
+  { "no_symlinks", [:todo, :os, :os_sym, :has_symlinks] }
 end
 
 
@@ -70,11 +69,11 @@ defmodule PathUtils.Case do
   defmacro refute_cwd_contains_symlink do
     quote do
       symlinks = symlinks_in_path(System.cwd) |>
-        Enum.map &("Symlink:     #{&1}")
+        Enum.map(&("Symlink:     #{&1}"))
       msg = [
         "System.cwd must not contain symlinks:",
         "System.cwd:  #{System.cwd}" | symlinks
-        ] |> Enum.join "\n        "
+        ] |> Enum.join("\n        ")
 
       # msg = "System.cwd must not contain symlinks: #{System.cwd}"
       # refute cwd_contains_symlink?(), "System.cwd must not contain symlinks: #{System.cwd}"
